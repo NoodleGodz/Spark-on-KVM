@@ -3,11 +3,3 @@ javac -cp ".:$SPARK_HOME/jars/spark-core_2.11-2.4.3.jar:$SPARK_HOME/jars/scala-l
 
 jar cf wc.jar *.class
 rm *.class
-
-rm -rf /tmp/hadoop*
-ssh slave1 rm -rf /tmp/hadoop*
-ssh slave2 rm -rf /tmp/hadoop*
-
-wait 
-
-hdfs namenode -format

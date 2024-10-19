@@ -1,0 +1,1845 @@
+Removing existing variables.tf
+Generated variables.tf with 1 master and 5 slaves.
+Removing existing ./ansible/inventory.ini
+Generated ./ansible/inventory.ini with 1 master and 5 slaves.
+Removing existing ./ansible/files/slaves
+Generated ./ansible/files/slaves with 5 slaves.
+Initializing the backend...
+Initializing provider plugins...
+- Reusing previous version of dmacvicar/libvirt from the dependency lock file
+- Using previously-installed dmacvicar/libvirt v0.8.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # libvirt_cloudinit_disk.commoninit[0] will be created
+  + resource "libvirt_cloudinit_disk" "commoninit" {
+      + id        = (known after apply)
+      + name      = "cloudinit-0.iso"
+      + pool      = "default"
+      + user_data = <<-EOT
+            #cloud-config
+            hostname: master 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.100 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:0:0:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT
+    }
+
+  # libvirt_cloudinit_disk.commoninit[1] will be created
+  + resource "libvirt_cloudinit_disk" "commoninit" {
+      + id        = (known after apply)
+      + name      = "cloudinit-1.iso"
+      + pool      = "default"
+      + user_data = <<-EOT
+            #cloud-config
+            hostname: slave1 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.101 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:1:1:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT
+    }
+
+  # libvirt_cloudinit_disk.commoninit[2] will be created
+  + resource "libvirt_cloudinit_disk" "commoninit" {
+      + id        = (known after apply)
+      + name      = "cloudinit-2.iso"
+      + pool      = "default"
+      + user_data = <<-EOT
+            #cloud-config
+            hostname: slave2 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.102 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:2:2:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT
+    }
+
+  # libvirt_cloudinit_disk.commoninit[3] will be created
+  + resource "libvirt_cloudinit_disk" "commoninit" {
+      + id        = (known after apply)
+      + name      = "cloudinit-3.iso"
+      + pool      = "default"
+      + user_data = <<-EOT
+            #cloud-config
+            hostname: slave3 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.103 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:3:3:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT
+    }
+
+  # libvirt_cloudinit_disk.commoninit[4] will be created
+  + resource "libvirt_cloudinit_disk" "commoninit" {
+      + id        = (known after apply)
+      + name      = "cloudinit-4.iso"
+      + pool      = "default"
+      + user_data = <<-EOT
+            #cloud-config
+            hostname: slave4 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.104 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:4:4:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT
+    }
+
+  # libvirt_cloudinit_disk.commoninit[5] will be created
+  + resource "libvirt_cloudinit_disk" "commoninit" {
+      + id        = (known after apply)
+      + name      = "cloudinit-5.iso"
+      + pool      = "default"
+      + user_data = <<-EOT
+            #cloud-config
+            hostname: slave5 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.105 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:5:5:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT
+    }
+
+  # libvirt_domain.vm[0] will be created
+  + resource "libvirt_domain" "vm" {
+      + arch        = (known after apply)
+      + autostart   = (known after apply)
+      + cloudinit   = (known after apply)
+      + emulator    = (known after apply)
+      + fw_cfg_name = "opt/com.coreos/config"
+      + id          = (known after apply)
+      + machine     = (known after apply)
+      + memory      = 1024
+      + name        = "simple-vm-0"
+      + qemu_agent  = false
+      + running     = true
+      + type        = "kvm"
+      + vcpu        = 1
+
+      + console {
+          + source_host    = "127.0.0.1"
+          + source_service = "0"
+          + target_port    = "0"
+          + target_type    = "serial"
+          + type           = "pty"
+        }
+
+      + cpu (known after apply)
+
+      + disk {
+          + scsi      = false
+          + volume_id = (known after apply)
+          + wwn       = (known after apply)
+        }
+
+      + network_interface {
+          + addresses    = [
+              + "192.168.122.100",
+            ]
+          + hostname     = (known after apply)
+          + mac          = "52:54:00:0:0:01"
+          + network_id   = (known after apply)
+          + network_name = "default"
+        }
+
+      + nvram (known after apply)
+    }
+
+  # libvirt_domain.vm[1] will be created
+  + resource "libvirt_domain" "vm" {
+      + arch        = (known after apply)
+      + autostart   = (known after apply)
+      + cloudinit   = (known after apply)
+      + emulator    = (known after apply)
+      + fw_cfg_name = "opt/com.coreos/config"
+      + id          = (known after apply)
+      + machine     = (known after apply)
+      + memory      = 1024
+      + name        = "simple-vm-1"
+      + qemu_agent  = false
+      + running     = true
+      + type        = "kvm"
+      + vcpu        = 1
+
+      + console {
+          + source_host    = "127.0.0.1"
+          + source_service = "0"
+          + target_port    = "0"
+          + target_type    = "serial"
+          + type           = "pty"
+        }
+
+      + cpu (known after apply)
+
+      + disk {
+          + scsi      = false
+          + volume_id = (known after apply)
+          + wwn       = (known after apply)
+        }
+
+      + network_interface {
+          + addresses    = [
+              + "192.168.122.101",
+            ]
+          + hostname     = (known after apply)
+          + mac          = "52:54:00:1:1:01"
+          + network_id   = (known after apply)
+          + network_name = "default"
+        }
+
+      + nvram (known after apply)
+    }
+
+  # libvirt_domain.vm[2] will be created
+  + resource "libvirt_domain" "vm" {
+      + arch        = (known after apply)
+      + autostart   = (known after apply)
+      + cloudinit   = (known after apply)
+      + emulator    = (known after apply)
+      + fw_cfg_name = "opt/com.coreos/config"
+      + id          = (known after apply)
+      + machine     = (known after apply)
+      + memory      = 1024
+      + name        = "simple-vm-2"
+      + qemu_agent  = false
+      + running     = true
+      + type        = "kvm"
+      + vcpu        = 1
+
+      + console {
+          + source_host    = "127.0.0.1"
+          + source_service = "0"
+          + target_port    = "0"
+          + target_type    = "serial"
+          + type           = "pty"
+        }
+
+      + cpu (known after apply)
+
+      + disk {
+          + scsi      = false
+          + volume_id = (known after apply)
+          + wwn       = (known after apply)
+        }
+
+      + network_interface {
+          + addresses    = [
+              + "192.168.122.102",
+            ]
+          + hostname     = (known after apply)
+          + mac          = "52:54:00:2:2:01"
+          + network_id   = (known after apply)
+          + network_name = "default"
+        }
+
+      + nvram (known after apply)
+    }
+
+  # libvirt_domain.vm[3] will be created
+  + resource "libvirt_domain" "vm" {
+      + arch        = (known after apply)
+      + autostart   = (known after apply)
+      + cloudinit   = (known after apply)
+      + emulator    = (known after apply)
+      + fw_cfg_name = "opt/com.coreos/config"
+      + id          = (known after apply)
+      + machine     = (known after apply)
+      + memory      = 1024
+      + name        = "simple-vm-3"
+      + qemu_agent  = false
+      + running     = true
+      + type        = "kvm"
+      + vcpu        = 1
+
+      + console {
+          + source_host    = "127.0.0.1"
+          + source_service = "0"
+          + target_port    = "0"
+          + target_type    = "serial"
+          + type           = "pty"
+        }
+
+      + cpu (known after apply)
+
+      + disk {
+          + scsi      = false
+          + volume_id = (known after apply)
+          + wwn       = (known after apply)
+        }
+
+      + network_interface {
+          + addresses    = [
+              + "192.168.122.103",
+            ]
+          + hostname     = (known after apply)
+          + mac          = "52:54:00:3:3:01"
+          + network_id   = (known after apply)
+          + network_name = "default"
+        }
+
+      + nvram (known after apply)
+    }
+
+  # libvirt_domain.vm[4] will be created
+  + resource "libvirt_domain" "vm" {
+      + arch        = (known after apply)
+      + autostart   = (known after apply)
+      + cloudinit   = (known after apply)
+      + emulator    = (known after apply)
+      + fw_cfg_name = "opt/com.coreos/config"
+      + id          = (known after apply)
+      + machine     = (known after apply)
+      + memory      = 1024
+      + name        = "simple-vm-4"
+      + qemu_agent  = false
+      + running     = true
+      + type        = "kvm"
+      + vcpu        = 1
+
+      + console {
+          + source_host    = "127.0.0.1"
+          + source_service = "0"
+          + target_port    = "0"
+          + target_type    = "serial"
+          + type           = "pty"
+        }
+
+      + cpu (known after apply)
+
+      + disk {
+          + scsi      = false
+          + volume_id = (known after apply)
+          + wwn       = (known after apply)
+        }
+
+      + network_interface {
+          + addresses    = [
+              + "192.168.122.104",
+            ]
+          + hostname     = (known after apply)
+          + mac          = "52:54:00:4:4:01"
+          + network_id   = (known after apply)
+          + network_name = "default"
+        }
+
+      + nvram (known after apply)
+    }
+
+  # libvirt_domain.vm[5] will be created
+  + resource "libvirt_domain" "vm" {
+      + arch        = (known after apply)
+      + autostart   = (known after apply)
+      + cloudinit   = (known after apply)
+      + emulator    = (known after apply)
+      + fw_cfg_name = "opt/com.coreos/config"
+      + id          = (known after apply)
+      + machine     = (known after apply)
+      + memory      = 1024
+      + name        = "simple-vm-5"
+      + qemu_agent  = false
+      + running     = true
+      + type        = "kvm"
+      + vcpu        = 1
+
+      + console {
+          + source_host    = "127.0.0.1"
+          + source_service = "0"
+          + target_port    = "0"
+          + target_type    = "serial"
+          + type           = "pty"
+        }
+
+      + cpu (known after apply)
+
+      + disk {
+          + scsi      = false
+          + volume_id = (known after apply)
+          + wwn       = (known after apply)
+        }
+
+      + network_interface {
+          + addresses    = [
+              + "192.168.122.105",
+            ]
+          + hostname     = (known after apply)
+          + mac          = "52:54:00:5:5:01"
+          + network_id   = (known after apply)
+          + network_name = "default"
+        }
+
+      + nvram (known after apply)
+    }
+
+  # libvirt_volume.ubuntu_base_image will be created
+  + resource "libvirt_volume" "ubuntu_base_image" {
+      + format = "qcow2"
+      + id     = (known after apply)
+      + name   = "ubuntu.qcow2"
+      + pool   = "home-pool"
+      + size   = (known after apply)
+      + source = "/home/baybobi/Desktop/bigdata/ubuntu.qcow2"
+    }
+
+  # libvirt_volume.vm_disk[0] will be created
+  + resource "libvirt_volume" "vm_disk" {
+      + base_volume_id = (known after apply)
+      + format         = "qcow2"
+      + id             = (known after apply)
+      + name           = "vm-disk-0.qcow2"
+      + pool           = "home-pool"
+      + size           = (known after apply)
+    }
+
+  # libvirt_volume.vm_disk[1] will be created
+  + resource "libvirt_volume" "vm_disk" {
+      + base_volume_id = (known after apply)
+      + format         = "qcow2"
+      + id             = (known after apply)
+      + name           = "vm-disk-1.qcow2"
+      + pool           = "home-pool"
+      + size           = (known after apply)
+    }
+
+  # libvirt_volume.vm_disk[2] will be created
+  + resource "libvirt_volume" "vm_disk" {
+      + base_volume_id = (known after apply)
+      + format         = "qcow2"
+      + id             = (known after apply)
+      + name           = "vm-disk-2.qcow2"
+      + pool           = "home-pool"
+      + size           = (known after apply)
+    }
+
+  # libvirt_volume.vm_disk[3] will be created
+  + resource "libvirt_volume" "vm_disk" {
+      + base_volume_id = (known after apply)
+      + format         = "qcow2"
+      + id             = (known after apply)
+      + name           = "vm-disk-3.qcow2"
+      + pool           = "home-pool"
+      + size           = (known after apply)
+    }
+
+  # libvirt_volume.vm_disk[4] will be created
+  + resource "libvirt_volume" "vm_disk" {
+      + base_volume_id = (known after apply)
+      + format         = "qcow2"
+      + id             = (known after apply)
+      + name           = "vm-disk-4.qcow2"
+      + pool           = "home-pool"
+      + size           = (known after apply)
+    }
+
+  # libvirt_volume.vm_disk[5] will be created
+  + resource "libvirt_volume" "vm_disk" {
+      + base_volume_id = (known after apply)
+      + format         = "qcow2"
+      + id             = (known after apply)
+      + name           = "vm-disk-5.qcow2"
+      + pool           = "home-pool"
+      + size           = (known after apply)
+    }
+
+Plan: 19 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + hello      = "im tired"
+  + vm_details = [
+      + {
+          + hostname = "master"
+          + ip       = "192.168.122.100"
+        },
+      + {
+          + hostname = "slave1"
+          + ip       = "192.168.122.101"
+        },
+      + {
+          + hostname = "slave2"
+          + ip       = "192.168.122.102"
+        },
+      + {
+          + hostname = "slave3"
+          + ip       = "192.168.122.103"
+        },
+      + {
+          + hostname = "slave4"
+          + ip       = "192.168.122.104"
+        },
+      + {
+          + hostname = "slave5"
+          + ip       = "192.168.122.105"
+        },
+    ]
+libvirt_volume.ubuntu_base_image: Creating...
+libvirt_cloudinit_disk.commoninit[1]: Creating...
+libvirt_cloudinit_disk.commoninit[2]: Creating...
+libvirt_cloudinit_disk.commoninit[0]: Creating...
+libvirt_cloudinit_disk.commoninit[5]: Creating...
+libvirt_cloudinit_disk.commoninit[4]: Creating...
+libvirt_cloudinit_disk.commoninit[3]: Creating...
+libvirt_cloudinit_disk.commoninit[0]: Creation complete after 0s [id=/var/lib/libvirt/images/cloudinit-0.iso;2b200ade-029e-4157-bb49-5c9fc4b966f5]
+libvirt_cloudinit_disk.commoninit[1]: Creation complete after 0s [id=/var/lib/libvirt/images/cloudinit-1.iso;2b3d13fc-1cad-40a0-a096-d5532b26aa4f]
+libvirt_cloudinit_disk.commoninit[2]: Creation complete after 0s [id=/var/lib/libvirt/images/cloudinit-2.iso;503620fe-e28a-45df-9b04-9c66451dadcd]
+libvirt_cloudinit_disk.commoninit[3]: Creation complete after 0s [id=/var/lib/libvirt/images/cloudinit-3.iso;f8982b34-7cdd-4de2-94fe-ee26132d88e2]
+libvirt_cloudinit_disk.commoninit[4]: Creation complete after 0s [id=/var/lib/libvirt/images/cloudinit-4.iso;146fd8c3-9982-4b89-bca6-ba56e1a795a8]
+libvirt_cloudinit_disk.commoninit[5]: Creation complete after 0s [id=/var/lib/libvirt/images/cloudinit-5.iso;8b0d7d22-4744-4986-90e1-294c67692d0a]
+libvirt_volume.ubuntu_base_image: Creation complete after 2s [id=/home/libvirt-images/ubuntu.qcow2]
+libvirt_volume.vm_disk[4]: Creating...
+libvirt_volume.vm_disk[1]: Creating...
+libvirt_volume.vm_disk[3]: Creating...
+libvirt_volume.vm_disk[2]: Creating...
+libvirt_volume.vm_disk[5]: Creating...
+libvirt_volume.vm_disk[0]: Creating...
+libvirt_volume.vm_disk[1]: Creation complete after 0s [id=/home/libvirt-images/vm-disk-1.qcow2]
+libvirt_volume.vm_disk[4]: Creation complete after 0s [id=/home/libvirt-images/vm-disk-4.qcow2]
+libvirt_volume.vm_disk[3]: Creation complete after 0s [id=/home/libvirt-images/vm-disk-3.qcow2]
+libvirt_volume.vm_disk[5]: Creation complete after 0s [id=/home/libvirt-images/vm-disk-5.qcow2]
+libvirt_volume.vm_disk[2]: Creation complete after 0s [id=/home/libvirt-images/vm-disk-2.qcow2]
+libvirt_volume.vm_disk[0]: Creation complete after 0s [id=/home/libvirt-images/vm-disk-0.qcow2]
+libvirt_domain.vm[2]: Creating...
+libvirt_domain.vm[0]: Creating...
+libvirt_domain.vm[4]: Creating...
+libvirt_domain.vm[5]: Creating...
+libvirt_domain.vm[3]: Creating...
+libvirt_domain.vm[1]: Creating...
+libvirt_domain.vm[0]: Creation complete after 4s [id=b1025f99-1968-4cf7-9c8b-ea61ced66334]
+libvirt_domain.vm[5]: Creation complete after 4s [id=55a6bc1b-0490-45a5-b625-1eddcf1b0783]
+libvirt_domain.vm[4]: Creation complete after 4s [id=84b01c57-c48f-41cc-9b57-d486e8a35850]
+libvirt_domain.vm[3]: Creation complete after 4s [id=7bcfeca7-c1bf-404a-bf51-2b5ad094788e]
+libvirt_domain.vm[2]: Creation complete after 4s [id=4412e70f-c819-439b-ad6e-98c41793de47]
+libvirt_domain.vm[1]: Creation complete after 5s [id=b194553f-1d3f-4f48-9b81-3d553a86b3b0]
+
+Apply complete! Resources: 19 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+hello = "im tired"
+vm_details = [
+  {
+    "hostname" = "master"
+    "ip" = "192.168.122.100"
+  },
+  {
+    "hostname" = "slave1"
+    "ip" = "192.168.122.101"
+  },
+  {
+    "hostname" = "slave2"
+    "ip" = "192.168.122.102"
+  },
+  {
+    "hostname" = "slave3"
+    "ip" = "192.168.122.103"
+  },
+  {
+    "hostname" = "slave4"
+    "ip" = "192.168.122.104"
+  },
+  {
+    "hostname" = "slave5"
+    "ip" = "192.168.122.105"
+  },
+]
+Wait 20 seconds for VM init before Ansible...
+
+PLAY [bigdata] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [slave3]
+ok: [slave4]
+ok: [slave2]
+ok: [master]
+ok: [slave1]
+ok: [slave5]
+
+TASK [Install OpenSSH server] **************************************************
+ok: [master]
+ok: [slave1]
+ok: [slave4]
+ok: [slave2]
+ok: [slave3]
+ok: [slave5]
+
+TASK [Ensure SSH service is running] *******************************************
+ok: [slave4]
+ok: [master]
+ok: [slave3]
+ok: [slave1]
+ok: [slave2]
+ok: [slave5]
+
+TASK [Ensure the .ssh directory exists] ****************************************
+ok: [slave2]
+ok: [slave3]
+ok: [slave1]
+ok: [master]
+ok: [slave4]
+ok: [slave5]
+
+TASK [Generate a common SSH key pair on the first VM] **************************
+skipping: [slave1]
+skipping: [slave2]
+skipping: [slave3]
+skipping: [slave4]
+skipping: [slave5]
+changed: [master]
+
+TASK [Fetch the id_rsa and id_rsa.pub files from the first VM] *****************
+skipping: [slave1]
+skipping: [slave2]
+skipping: [slave3]
+skipping: [slave4]
+skipping: [slave5]
+changed: [master]
+
+TASK [Fetch the id_rsa.pub file from the first VM] *****************************
+skipping: [slave1]
+skipping: [slave2]
+skipping: [slave3]
+skipping: [slave4]
+skipping: [slave5]
+changed: [master]
+
+TASK [Copy id_rsa file to other VMs] *******************************************
+skipping: [master]
+changed: [slave4]
+changed: [slave3]
+changed: [slave1]
+changed: [slave2]
+changed: [slave5]
+
+TASK [Copy id_rsa.pub file to other VMs] ***************************************
+skipping: [master]
+changed: [slave2]
+changed: [slave4]
+changed: [slave1]
+changed: [slave5]
+changed: [slave3]
+
+TASK [Set permissions on authorized_keys file] *********************************
+ok: [slave2]
+ok: [master]
+ok: [slave1]
+ok: [slave3]
+ok: [slave4]
+ok: [slave5]
+
+TASK [Append id_rsa.pub to authorized_keys] ************************************
+changed: [slave1]
+changed: [slave2]
+changed: [slave3]
+changed: [master]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Add custom SSH client configuration to ~/.ssh/config] ********************
+changed: [slave4]
+changed: [master]
+changed: [slave1]
+changed: [slave3]
+changed: [slave2]
+changed: [slave5]
+
+TASK [Gather VM IPs and hostnames from inventory] ******************************
+ok: [master]
+ok: [slave1]
+ok: [slave2]
+ok: [slave3]
+ok: [slave4]
+ok: [slave5]
+
+TASK [Generate host mapping entries] *******************************************
+ok: [master] => (item=0)
+ok: [slave1] => (item=0)
+ok: [master] => (item=1)
+ok: [slave1] => (item=1)
+ok: [master] => (item=2)
+ok: [slave1] => (item=2)
+ok: [slave2] => (item=0)
+ok: [master] => (item=3)
+ok: [slave1] => (item=3)
+ok: [slave3] => (item=0)
+ok: [slave2] => (item=1)
+ok: [master] => (item=4)
+ok: [slave1] => (item=4)
+ok: [slave3] => (item=1)
+ok: [slave2] => (item=2)
+ok: [master] => (item=5)
+ok: [slave1] => (item=5)
+ok: [slave3] => (item=2)
+ok: [slave2] => (item=3)
+ok: [slave4] => (item=0)
+ok: [slave3] => (item=3)
+ok: [slave2] => (item=4)
+ok: [slave4] => (item=1)
+ok: [slave2] => (item=5)
+ok: [slave3] => (item=4)
+ok: [slave4] => (item=2)
+ok: [slave3] => (item=5)
+ok: [slave4] => (item=3)
+ok: [slave4] => (item=4)
+ok: [slave4] => (item=5)
+ok: [slave5] => (item=0)
+ok: [slave5] => (item=1)
+ok: [slave5] => (item=2)
+ok: [slave5] => (item=3)
+ok: [slave5] => (item=4)
+ok: [slave5] => (item=5)
+
+TASK [Update /etc/hosts with VM mappings] **************************************
+changed: [master]
+changed: [slave1]
+changed: [slave2]
+changed: [slave3]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Install dependencies] ****************************************************
+ok: [master]
+ok: [slave2]
+ok: [slave1]
+ok: [slave4]
+ok: [slave3]
+ok: [slave5]
+
+TASK [Create a directory for downloads] ****************************************
+changed: [master]
+changed: [slave2]
+changed: [slave1]
+changed: [slave3]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Copy JDK 8u202 from local directory] *************************************
+changed: [slave3]
+changed: [master]
+changed: [slave2]
+changed: [slave1]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Copy Hadoop 2.7.1 from local directory] **********************************
+changed: [slave2]
+changed: [master]
+changed: [slave3]
+changed: [slave1]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Copy Spark 2.4.3 from local directory] ***********************************
+changed: [slave2]
+changed: [slave4]
+changed: [master]
+changed: [slave1]
+changed: [slave3]
+changed: [slave5]
+
+TASK [Extract JDK archive] *****************************************************
+changed: [slave4]
+changed: [slave2]
+changed: [slave3]
+changed: [master]
+changed: [slave1]
+changed: [slave5]
+
+TASK [Extract Hadoop archive] **************************************************
+changed: [slave1]
+changed: [slave2]
+changed: [slave4]
+changed: [master]
+changed: [slave3]
+changed: [slave5]
+
+TASK [Extract Spark archive] ***************************************************
+changed: [slave4]
+changed: [slave1]
+changed: [slave2]
+changed: [slave3]
+changed: [master]
+changed: [slave5]
+
+TASK [Add environment variables to .rc] ****************************************
+changed: [slave1]
+changed: [slave3]
+changed: [slave2]
+changed: [master]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Remove JDK archive] ******************************************************
+changed: [slave1]
+changed: [master]
+changed: [slave2]
+changed: [slave3]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Remove Hadoop archive] ***************************************************
+changed: [slave1]
+changed: [master]
+changed: [slave3]
+changed: [slave2]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Remove Spark archive] ****************************************************
+changed: [slave2]
+changed: [slave3]
+changed: [slave4]
+changed: [master]
+changed: [slave1]
+changed: [slave5]
+
+TASK [Add or update JAVA_HOME, HADOOP_HOME, SPARK_HOME in /etc/environment] ****
+changed: [master] => (item=JAVA_HOME="/home/ubuntu/install/jdk1.8.0_202")
+changed: [slave1] => (item=JAVA_HOME="/home/ubuntu/install/jdk1.8.0_202")
+changed: [slave2] => (item=JAVA_HOME="/home/ubuntu/install/jdk1.8.0_202")
+changed: [slave4] => (item=JAVA_HOME="/home/ubuntu/install/jdk1.8.0_202")
+changed: [slave3] => (item=JAVA_HOME="/home/ubuntu/install/jdk1.8.0_202")
+changed: [slave2] => (item=HADOOP_HOME="/home/ubuntu/install/hadoop-2.7.1")
+changed: [master] => (item=HADOOP_HOME="/home/ubuntu/install/hadoop-2.7.1")
+changed: [slave1] => (item=HADOOP_HOME="/home/ubuntu/install/hadoop-2.7.1")
+changed: [slave4] => (item=HADOOP_HOME="/home/ubuntu/install/hadoop-2.7.1")
+changed: [slave3] => (item=HADOOP_HOME="/home/ubuntu/install/hadoop-2.7.1")
+changed: [master] => (item=SPARK_HOME="/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7")
+changed: [slave1] => (item=SPARK_HOME="/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7")
+changed: [slave2] => (item=SPARK_HOME="/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7")
+changed: [slave4] => (item=SPARK_HOME="/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7")
+changed: [slave3] => (item=SPARK_HOME="/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7")
+changed: [slave1] => (item=BASH_ENV="/etc/profile.d/loaded_env.sh")
+changed: [master] => (item=BASH_ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave4] => (item=BASH_ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave2] => (item=BASH_ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave3] => (item=BASH_ENV="/etc/profile.d/loaded_env.sh")
+changed: [master] => (item=ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave1] => (item=ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave2] => (item=ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave4] => (item=ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave3] => (item=ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave5] => (item=JAVA_HOME="/home/ubuntu/install/jdk1.8.0_202")
+changed: [slave5] => (item=HADOOP_HOME="/home/ubuntu/install/hadoop-2.7.1")
+changed: [slave5] => (item=SPARK_HOME="/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7")
+changed: [slave5] => (item=BASH_ENV="/etc/profile.d/loaded_env.sh")
+changed: [slave5] => (item=ENV="/etc/profile.d/loaded_env.sh")
+
+TASK [Add ubuntu user to sudoers with no password requirement] *****************
+changed: [master]
+changed: [slave1]
+changed: [slave3]
+changed: [slave2]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Change ownership of /home/ubuntu/install to ubuntu] **********************
+changed: [slave1]
+changed: [slave4]
+changed: [master]
+changed: [slave2]
+changed: [slave3]
+changed: [slave5]
+
+TASK [Change permissions of /home/ubuntu/install to 755] ***********************
+changed: [slave1]
+changed: [master]
+changed: [slave2]
+changed: [slave3]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Copy ENV] ****************************************************************
+changed: [slave1]
+changed: [slave2]
+changed: [master]
+changed: [slave4]
+changed: [slave3]
+changed: [slave5]
+
+TASK [Set ENV] *****************************************************************
+changed: [master]
+changed: [slave1]
+changed: [slave3]
+changed: [slave2]
+changed: [slave4]
+changed: [slave5]
+
+PLAY RECAP *********************************************************************
+master                     : ok=31   changed=23   unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+slave1                     : ok=30   changed=22   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+slave2                     : ok=30   changed=22   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+slave3                     : ok=30   changed=22   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+slave4                     : ok=30   changed=22   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+slave5                     : ok=30   changed=22   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+
+PLAY [Replace Hadoop anfilesuration files across all VMs] **********************
+
+TASK [Gathering Facts] *********************************************************
+ok: [slave2]
+ok: [slave1]
+ok: [slave3]
+ok: [slave4]
+ok: [master]
+ok: [slave5]
+
+TASK [Update JAVA_HOME in hadoop-env.sh] ***************************************
+changed: [slave1]
+changed: [master]
+changed: [slave3]
+changed: [slave4]
+changed: [slave2]
+changed: [slave5]
+
+TASK [Replace core-site.xml] ***************************************************
+changed: [slave4]
+changed: [slave3]
+changed: [master]
+changed: [slave1]
+changed: [slave2]
+changed: [slave5]
+
+TASK [Replace hdfs-site.xml] ***************************************************
+changed: [master]
+changed: [slave1]
+changed: [slave2]
+changed: [slave3]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Replace Hadoop slaves file] **********************************************
+changed: [master]
+changed: [slave3]
+changed: [slave1]
+changed: [slave2]
+changed: [slave4]
+changed: [slave5]
+
+TASK [Replace Spark slaves file] ***********************************************
+changed: [master]
+changed: [slave1]
+changed: [slave2]
+changed: [slave3]
+changed: [slave4]
+changed: [slave5]
+
+PLAY RECAP *********************************************************************
+master                     : ok=6    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+slave1                     : ok=6    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+slave2                     : ok=6    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+slave3                     : ok=6    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+slave4                     : ok=6    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+slave5                     : ok=6    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Transferring files to the Master...
+Files transferred successfully!
+Compiling and packaging the Java file on the Master...
+Created Hdfs...
+Formatting using clusterid: CID-95979b60-bf7c-44e2-9105-1e959362f3cd
+Starting namenodes on [master]
+master: starting namenode, logging to /home/ubuntu/install/hadoop-2.7.1/logs/hadoop-ubuntu-namenode-master.out
+slave4: starting datanode, logging to /home/ubuntu/install/hadoop-2.7.1/logs/hadoop-ubuntu-datanode-slave4.out
+slave2: starting datanode, logging to /home/ubuntu/install/hadoop-2.7.1/logs/hadoop-ubuntu-datanode-slave2.out
+slave1: starting datanode, logging to /home/ubuntu/install/hadoop-2.7.1/logs/hadoop-ubuntu-datanode-slave1.out
+slave3: starting datanode, logging to /home/ubuntu/install/hadoop-2.7.1/logs/hadoop-ubuntu-datanode-slave3.out
+slave5: starting datanode, logging to /home/ubuntu/install/hadoop-2.7.1/logs/hadoop-ubuntu-datanode-slave5.out
+Starting secondary namenodes [0.0.0.0]
+0.0.0.0: starting secondarynamenode, logging to /home/ubuntu/install/hadoop-2.7.1/logs/hadoop-ubuntu-secondarynamenode-master.out
+Uploading the data.txt to Hdfs /input...
+Initiating Spark...
+starting org.apache.spark.deploy.master.Master, logging to /home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/logs/spark-ubuntu-org.apache.spark.deploy.master.Master-1-master.out
+slave1: starting org.apache.spark.deploy.worker.Worker, logging to /home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/logs/spark-ubuntu-org.apache.spark.deploy.worker.Worker-1-slave1.out
+slave3: starting org.apache.spark.deploy.worker.Worker, logging to /home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/logs/spark-ubuntu-org.apache.spark.deploy.worker.Worker-1-slave3.out
+slave2: starting org.apache.spark.deploy.worker.Worker, logging to /home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/logs/spark-ubuntu-org.apache.spark.deploy.worker.Worker-1-slave2.out
+slave4: starting org.apache.spark.deploy.worker.Worker, logging to /home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/logs/spark-ubuntu-org.apache.spark.deploy.worker.Worker-1-slave4.out
+slave5: starting org.apache.spark.deploy.worker.Worker, logging to /home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/logs/spark-ubuntu-org.apache.spark.deploy.worker.Worker-1-slave5.out
+Deploying tasks in Spark Clusters...
+SHELL=/bin/bash
+JAVA_HOME=/home/ubuntu/install/jdk1.8.0_202
+ENV=/etc/profile.d/loaded_env.sh
+PWD=/home/ubuntu
+LOGNAME=ubuntu
+XDG_SESSION_TYPE=tty
+MOTD_SHOWN=pam
+HOME=/home/ubuntu
+LANG=C.UTF-8
+SSH_CONNECTION=192.168.122.1 53206 192.168.122.100 22
+XDG_SESSION_CLASS=user
+HADOOP_HOME=/home/ubuntu/install/hadoop-2.7.1
+USER=ubuntu
+SHLVL=1
+BASH_ENV=/etc/profile.d/loaded_env.sh
+SPARK_HOME=/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7
+XDG_SESSION_ID=10
+XDG_RUNTIME_DIR=/run/user/1000
+SSH_CLIENT=192.168.122.1 53206 22
+PATH=/home/ubuntu/install/hadoop-2.7.1/bin:/home/ubuntu/install/hadoop-2.7.1/sbin:/home/ubuntu/install/jdk1.8.0_202/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/bin:/home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/sbin
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+TEST=IT WORKS
+_=/usr/bin/printenv
+WordCount
+======================
+time in ms :12136
+======================
+Merging outputs and downloading to local machine...
+Deprovision KVM...
+libvirt_volume.ubuntu_base_image: Refreshing state... [id=/home/libvirt-images/ubuntu.qcow2]
+libvirt_cloudinit_disk.commoninit[4]: Refreshing state... [id=/var/lib/libvirt/images/cloudinit-4.iso;146fd8c3-9982-4b89-bca6-ba56e1a795a8]
+libvirt_cloudinit_disk.commoninit[5]: Refreshing state... [id=/var/lib/libvirt/images/cloudinit-5.iso;8b0d7d22-4744-4986-90e1-294c67692d0a]
+libvirt_cloudinit_disk.commoninit[0]: Refreshing state... [id=/var/lib/libvirt/images/cloudinit-0.iso;2b200ade-029e-4157-bb49-5c9fc4b966f5]
+libvirt_cloudinit_disk.commoninit[3]: Refreshing state... [id=/var/lib/libvirt/images/cloudinit-3.iso;f8982b34-7cdd-4de2-94fe-ee26132d88e2]
+libvirt_cloudinit_disk.commoninit[1]: Refreshing state... [id=/var/lib/libvirt/images/cloudinit-1.iso;2b3d13fc-1cad-40a0-a096-d5532b26aa4f]
+libvirt_cloudinit_disk.commoninit[2]: Refreshing state... [id=/var/lib/libvirt/images/cloudinit-2.iso;503620fe-e28a-45df-9b04-9c66451dadcd]
+libvirt_volume.vm_disk[1]: Refreshing state... [id=/home/libvirt-images/vm-disk-1.qcow2]
+libvirt_volume.vm_disk[0]: Refreshing state... [id=/home/libvirt-images/vm-disk-0.qcow2]
+libvirt_volume.vm_disk[3]: Refreshing state... [id=/home/libvirt-images/vm-disk-3.qcow2]
+libvirt_volume.vm_disk[5]: Refreshing state... [id=/home/libvirt-images/vm-disk-5.qcow2]
+libvirt_volume.vm_disk[2]: Refreshing state... [id=/home/libvirt-images/vm-disk-2.qcow2]
+libvirt_volume.vm_disk[4]: Refreshing state... [id=/home/libvirt-images/vm-disk-4.qcow2]
+libvirt_domain.vm[2]: Refreshing state... [id=4412e70f-c819-439b-ad6e-98c41793de47]
+libvirt_domain.vm[4]: Refreshing state... [id=84b01c57-c48f-41cc-9b57-d486e8a35850]
+libvirt_domain.vm[5]: Refreshing state... [id=55a6bc1b-0490-45a5-b625-1eddcf1b0783]
+libvirt_domain.vm[0]: Refreshing state... [id=b1025f99-1968-4cf7-9c8b-ea61ced66334]
+libvirt_domain.vm[3]: Refreshing state... [id=7bcfeca7-c1bf-404a-bf51-2b5ad094788e]
+libvirt_domain.vm[1]: Refreshing state... [id=b194553f-1d3f-4f48-9b81-3d553a86b3b0]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # libvirt_cloudinit_disk.commoninit[0] will be destroyed
+  - resource "libvirt_cloudinit_disk" "commoninit" {
+      - id             = "/var/lib/libvirt/images/cloudinit-0.iso;2b200ade-029e-4157-bb49-5c9fc4b966f5" -> null
+      - name           = "cloudinit-0.iso" -> null
+      - pool           = "default" -> null
+      - user_data      = <<-EOT
+            #cloud-config
+            hostname: master 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.100 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:0:0:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # libvirt_cloudinit_disk.commoninit[1] will be destroyed
+  - resource "libvirt_cloudinit_disk" "commoninit" {
+      - id             = "/var/lib/libvirt/images/cloudinit-1.iso;2b3d13fc-1cad-40a0-a096-d5532b26aa4f" -> null
+      - name           = "cloudinit-1.iso" -> null
+      - pool           = "default" -> null
+      - user_data      = <<-EOT
+            #cloud-config
+            hostname: slave1 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.101 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:1:1:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # libvirt_cloudinit_disk.commoninit[2] will be destroyed
+  - resource "libvirt_cloudinit_disk" "commoninit" {
+      - id             = "/var/lib/libvirt/images/cloudinit-2.iso;503620fe-e28a-45df-9b04-9c66451dadcd" -> null
+      - name           = "cloudinit-2.iso" -> null
+      - pool           = "default" -> null
+      - user_data      = <<-EOT
+            #cloud-config
+            hostname: slave2 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.102 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:2:2:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # libvirt_cloudinit_disk.commoninit[3] will be destroyed
+  - resource "libvirt_cloudinit_disk" "commoninit" {
+      - id             = "/var/lib/libvirt/images/cloudinit-3.iso;f8982b34-7cdd-4de2-94fe-ee26132d88e2" -> null
+      - name           = "cloudinit-3.iso" -> null
+      - pool           = "default" -> null
+      - user_data      = <<-EOT
+            #cloud-config
+            hostname: slave3 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.103 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:3:3:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # libvirt_cloudinit_disk.commoninit[4] will be destroyed
+  - resource "libvirt_cloudinit_disk" "commoninit" {
+      - id             = "/var/lib/libvirt/images/cloudinit-4.iso;146fd8c3-9982-4b89-bca6-ba56e1a795a8" -> null
+      - name           = "cloudinit-4.iso" -> null
+      - pool           = "default" -> null
+      - user_data      = <<-EOT
+            #cloud-config
+            hostname: slave4 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.104 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:4:4:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # libvirt_cloudinit_disk.commoninit[5] will be destroyed
+  - resource "libvirt_cloudinit_disk" "commoninit" {
+      - id             = "/var/lib/libvirt/images/cloudinit-5.iso;8b0d7d22-4744-4986-90e1-294c67692d0a" -> null
+      - name           = "cloudinit-5.iso" -> null
+      - pool           = "default" -> null
+      - user_data      = <<-EOT
+            #cloud-config
+            hostname: slave5 
+            ssh_pwauth: True
+            users:
+              - name: ubuntu
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                shell: /bin/bash
+                ssh-authorized-keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyacDm9Z/7o67aQ+QGRCMa10XQluRd2F5KQEiseL0F12O/HH5qmcDL38RGw1ap9QpfOPt6HpSFaVQoSGd1Re6zm0l5iTJjAVhcub/9+os8OT31zKFxo9+l3g09l+oxXBHxfut/rjXgmqrj3inRPuauUYyJHGvA3lkkNv/SqamTc3EB8Qf0VN6411INOQ6FRFq3iwf01DQhg+xe+Yl4KihpoQCS6q/CB/xfSZ16AzUnkCQmJNXsoGffEQn5wwy+32AKsu1/8tp7SUH6fAzdPbEkfQuXb9HBcH8/OKU94xNCr4iMMtYOT/Oo8cBVQLrUs0b1Gj9Z/AeV0rEErEiCQQZM/u6ZXZU/Eon4SkPW1taDQIzjELzx+SKaR+Va7X60MWyT2vJaYyUTrMapeB4K3VbwuRaPbyjF50DBx6GLsRKG0JQHQnbySR3LKnAOs/RrvCjawkWZRIz3JzINnCcMhvW4TqdS7L07F2pnqWZ6g98eS4NzmkjGXG/qsJwYdrBZnv8= baybobi@baybobi-G5-MF5
+              # Embed SSH public key
+            
+            network:
+              version: 2
+              ethernets:
+                ens3:
+                  dhcp4: false
+                  optional: false
+                  addresses:
+                    - 192.168.122.105 
+                  gateway4: 192.168.122.1 
+                  nameservers:
+                    addresses:
+                      - 8.8.8.8  # Google DNS
+                      - 8.8.4.4
+                  match:
+                    macaddress: "52:54:00:5:5:01"  # Match based on MAC
+                  set-name: ens3
+            growpart:
+              devices: [/]
+              ignore_growroot_disabled: false
+              mode: auto
+        EOT -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # libvirt_domain.vm[0] will be destroyed
+  - resource "libvirt_domain" "vm" {
+      - arch        = "x86_64" -> null
+      - autostart   = false -> null
+      - cloudinit   = "/var/lib/libvirt/images/cloudinit-0.iso;2b200ade-029e-4157-bb49-5c9fc4b966f5" -> null
+      - cmdline     = [] -> null
+      - emulator    = "/usr/bin/qemu-system-x86_64" -> null
+      - fw_cfg_name = "opt/com.coreos/config" -> null
+      - id          = "b1025f99-1968-4cf7-9c8b-ea61ced66334" -> null
+      - machine     = "pc" -> null
+      - memory      = 1024 -> null
+      - name        = "simple-vm-0" -> null
+      - qemu_agent  = false -> null
+      - running     = true -> null
+      - type        = "kvm" -> null
+      - vcpu        = 1 -> null
+        # (3 unchanged attributes hidden)
+
+      - console {
+          - source_host    = "127.0.0.1" -> null
+          - source_service = "0" -> null
+          - target_port    = "0" -> null
+          - target_type    = "serial" -> null
+          - type           = "pty" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - cpu {
+          - mode = "custom" -> null
+        }
+
+      - disk {
+          - scsi         = false -> null
+          - volume_id    = "/home/libvirt-images/vm-disk-0.qcow2" -> null
+            # (4 unchanged attributes hidden)
+        }
+
+      - network_interface {
+          - addresses      = [] -> null
+          - mac            = "52:54:00:00:00:01" -> null
+          - network_id     = "60891583-c767-4a09-a0ca-38504c1617f7" -> null
+          - network_name   = "default" -> null
+          - wait_for_lease = false -> null
+            # (5 unchanged attributes hidden)
+        }
+    }
+
+  # libvirt_domain.vm[1] will be destroyed
+  - resource "libvirt_domain" "vm" {
+      - arch        = "x86_64" -> null
+      - autostart   = false -> null
+      - cloudinit   = "/var/lib/libvirt/images/cloudinit-1.iso;2b3d13fc-1cad-40a0-a096-d5532b26aa4f" -> null
+      - cmdline     = [] -> null
+      - emulator    = "/usr/bin/qemu-system-x86_64" -> null
+      - fw_cfg_name = "opt/com.coreos/config" -> null
+      - id          = "b194553f-1d3f-4f48-9b81-3d553a86b3b0" -> null
+      - machine     = "pc" -> null
+      - memory      = 1024 -> null
+      - name        = "simple-vm-1" -> null
+      - qemu_agent  = false -> null
+      - running     = true -> null
+      - type        = "kvm" -> null
+      - vcpu        = 1 -> null
+        # (3 unchanged attributes hidden)
+
+      - console {
+          - source_host    = "127.0.0.1" -> null
+          - source_service = "0" -> null
+          - target_port    = "0" -> null
+          - target_type    = "serial" -> null
+          - type           = "pty" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - cpu {
+          - mode = "custom" -> null
+        }
+
+      - disk {
+          - scsi         = false -> null
+          - volume_id    = "/home/libvirt-images/vm-disk-1.qcow2" -> null
+            # (4 unchanged attributes hidden)
+        }
+
+      - network_interface {
+          - addresses      = [
+              - "192.168.122.101",
+            ] -> null
+          - mac            = "52:54:00:01:01:01" -> null
+          - network_id     = "60891583-c767-4a09-a0ca-38504c1617f7" -> null
+          - network_name   = "default" -> null
+          - wait_for_lease = false -> null
+            # (5 unchanged attributes hidden)
+        }
+    }
+
+  # libvirt_domain.vm[2] will be destroyed
+  - resource "libvirt_domain" "vm" {
+      - arch        = "x86_64" -> null
+      - autostart   = false -> null
+      - cloudinit   = "/var/lib/libvirt/images/cloudinit-2.iso;503620fe-e28a-45df-9b04-9c66451dadcd" -> null
+      - cmdline     = [] -> null
+      - emulator    = "/usr/bin/qemu-system-x86_64" -> null
+      - fw_cfg_name = "opt/com.coreos/config" -> null
+      - id          = "4412e70f-c819-439b-ad6e-98c41793de47" -> null
+      - machine     = "pc" -> null
+      - memory      = 1024 -> null
+      - name        = "simple-vm-2" -> null
+      - qemu_agent  = false -> null
+      - running     = true -> null
+      - type        = "kvm" -> null
+      - vcpu        = 1 -> null
+        # (3 unchanged attributes hidden)
+
+      - console {
+          - source_host    = "127.0.0.1" -> null
+          - source_service = "0" -> null
+          - target_port    = "0" -> null
+          - target_type    = "serial" -> null
+          - type           = "pty" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - cpu {
+          - mode = "custom" -> null
+        }
+
+      - disk {
+          - scsi         = false -> null
+          - volume_id    = "/home/libvirt-images/vm-disk-2.qcow2" -> null
+            # (4 unchanged attributes hidden)
+        }
+
+      - network_interface {
+          - addresses      = [] -> null
+          - mac            = "52:54:00:02:02:01" -> null
+          - network_id     = "60891583-c767-4a09-a0ca-38504c1617f7" -> null
+          - network_name   = "default" -> null
+          - wait_for_lease = false -> null
+            # (5 unchanged attributes hidden)
+        }
+    }
+
+  # libvirt_domain.vm[3] will be destroyed
+  - resource "libvirt_domain" "vm" {
+      - arch        = "x86_64" -> null
+      - autostart   = false -> null
+      - cloudinit   = "/var/lib/libvirt/images/cloudinit-3.iso;f8982b34-7cdd-4de2-94fe-ee26132d88e2" -> null
+      - cmdline     = [] -> null
+      - emulator    = "/usr/bin/qemu-system-x86_64" -> null
+      - fw_cfg_name = "opt/com.coreos/config" -> null
+      - id          = "7bcfeca7-c1bf-404a-bf51-2b5ad094788e" -> null
+      - machine     = "pc" -> null
+      - memory      = 1024 -> null
+      - name        = "simple-vm-3" -> null
+      - qemu_agent  = false -> null
+      - running     = true -> null
+      - type        = "kvm" -> null
+      - vcpu        = 1 -> null
+        # (3 unchanged attributes hidden)
+
+      - console {
+          - source_host    = "127.0.0.1" -> null
+          - source_service = "0" -> null
+          - target_port    = "0" -> null
+          - target_type    = "serial" -> null
+          - type           = "pty" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - cpu {
+          - mode = "custom" -> null
+        }
+
+      - disk {
+          - scsi         = false -> null
+          - volume_id    = "/home/libvirt-images/vm-disk-3.qcow2" -> null
+            # (4 unchanged attributes hidden)
+        }
+
+      - network_interface {
+          - addresses      = [] -> null
+          - mac            = "52:54:00:03:03:01" -> null
+          - network_id     = "60891583-c767-4a09-a0ca-38504c1617f7" -> null
+          - network_name   = "default" -> null
+          - wait_for_lease = false -> null
+            # (5 unchanged attributes hidden)
+        }
+    }
+
+  # libvirt_domain.vm[4] will be destroyed
+  - resource "libvirt_domain" "vm" {
+      - arch        = "x86_64" -> null
+      - autostart   = false -> null
+      - cloudinit   = "/var/lib/libvirt/images/cloudinit-4.iso;146fd8c3-9982-4b89-bca6-ba56e1a795a8" -> null
+      - cmdline     = [] -> null
+      - emulator    = "/usr/bin/qemu-system-x86_64" -> null
+      - fw_cfg_name = "opt/com.coreos/config" -> null
+      - id          = "84b01c57-c48f-41cc-9b57-d486e8a35850" -> null
+      - machine     = "pc" -> null
+      - memory      = 1024 -> null
+      - name        = "simple-vm-4" -> null
+      - qemu_agent  = false -> null
+      - running     = true -> null
+      - type        = "kvm" -> null
+      - vcpu        = 1 -> null
+        # (3 unchanged attributes hidden)
+
+      - console {
+          - source_host    = "127.0.0.1" -> null
+          - source_service = "0" -> null
+          - target_port    = "0" -> null
+          - target_type    = "serial" -> null
+          - type           = "pty" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - cpu {
+          - mode = "custom" -> null
+        }
+
+      - disk {
+          - scsi         = false -> null
+          - volume_id    = "/home/libvirt-images/vm-disk-4.qcow2" -> null
+            # (4 unchanged attributes hidden)
+        }
+
+      - network_interface {
+          - addresses      = [] -> null
+          - mac            = "52:54:00:04:04:01" -> null
+          - network_id     = "60891583-c767-4a09-a0ca-38504c1617f7" -> null
+          - network_name   = "default" -> null
+          - wait_for_lease = false -> null
+            # (5 unchanged attributes hidden)
+        }
+    }
+
+  # libvirt_domain.vm[5] will be destroyed
+  - resource "libvirt_domain" "vm" {
+      - arch        = "x86_64" -> null
+      - autostart   = false -> null
+      - cloudinit   = "/var/lib/libvirt/images/cloudinit-5.iso;8b0d7d22-4744-4986-90e1-294c67692d0a" -> null
+      - cmdline     = [] -> null
+      - emulator    = "/usr/bin/qemu-system-x86_64" -> null
+      - fw_cfg_name = "opt/com.coreos/config" -> null
+      - id          = "55a6bc1b-0490-45a5-b625-1eddcf1b0783" -> null
+      - machine     = "pc" -> null
+      - memory      = 1024 -> null
+      - name        = "simple-vm-5" -> null
+      - qemu_agent  = false -> null
+      - running     = true -> null
+      - type        = "kvm" -> null
+      - vcpu        = 1 -> null
+        # (3 unchanged attributes hidden)
+
+      - console {
+          - source_host    = "127.0.0.1" -> null
+          - source_service = "0" -> null
+          - target_port    = "0" -> null
+          - target_type    = "serial" -> null
+          - type           = "pty" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - cpu {
+          - mode = "custom" -> null
+        }
+
+      - disk {
+          - scsi         = false -> null
+          - volume_id    = "/home/libvirt-images/vm-disk-5.qcow2" -> null
+            # (4 unchanged attributes hidden)
+        }
+
+      - network_interface {
+          - addresses      = [] -> null
+          - mac            = "52:54:00:05:05:01" -> null
+          - network_id     = "60891583-c767-4a09-a0ca-38504c1617f7" -> null
+          - network_name   = "default" -> null
+          - wait_for_lease = false -> null
+            # (5 unchanged attributes hidden)
+        }
+    }
+
+  # libvirt_volume.ubuntu_base_image will be destroyed
+  - resource "libvirt_volume" "ubuntu_base_image" {
+      - format = "qcow2" -> null
+      - id     = "/home/libvirt-images/ubuntu.qcow2" -> null
+      - name   = "ubuntu.qcow2" -> null
+      - pool   = "home-pool" -> null
+      - size   = 7730102272 -> null
+      - source = "/home/baybobi/Desktop/bigdata/ubuntu.qcow2" -> null
+    }
+
+  # libvirt_volume.vm_disk[0] will be destroyed
+  - resource "libvirt_volume" "vm_disk" {
+      - base_volume_id = "/home/libvirt-images/ubuntu.qcow2" -> null
+      - format         = "qcow2" -> null
+      - id             = "/home/libvirt-images/vm-disk-0.qcow2" -> null
+      - name           = "vm-disk-0.qcow2" -> null
+      - pool           = "home-pool" -> null
+      - size           = 7730102272 -> null
+    }
+
+  # libvirt_volume.vm_disk[1] will be destroyed
+  - resource "libvirt_volume" "vm_disk" {
+      - base_volume_id = "/home/libvirt-images/ubuntu.qcow2" -> null
+      - format         = "qcow2" -> null
+      - id             = "/home/libvirt-images/vm-disk-1.qcow2" -> null
+      - name           = "vm-disk-1.qcow2" -> null
+      - pool           = "home-pool" -> null
+      - size           = 7730102272 -> null
+    }
+
+  # libvirt_volume.vm_disk[2] will be destroyed
+  - resource "libvirt_volume" "vm_disk" {
+      - base_volume_id = "/home/libvirt-images/ubuntu.qcow2" -> null
+      - format         = "qcow2" -> null
+      - id             = "/home/libvirt-images/vm-disk-2.qcow2" -> null
+      - name           = "vm-disk-2.qcow2" -> null
+      - pool           = "home-pool" -> null
+      - size           = 7730102272 -> null
+    }
+
+  # libvirt_volume.vm_disk[3] will be destroyed
+  - resource "libvirt_volume" "vm_disk" {
+      - base_volume_id = "/home/libvirt-images/ubuntu.qcow2" -> null
+      - format         = "qcow2" -> null
+      - id             = "/home/libvirt-images/vm-disk-3.qcow2" -> null
+      - name           = "vm-disk-3.qcow2" -> null
+      - pool           = "home-pool" -> null
+      - size           = 7730102272 -> null
+    }
+
+  # libvirt_volume.vm_disk[4] will be destroyed
+  - resource "libvirt_volume" "vm_disk" {
+      - base_volume_id = "/home/libvirt-images/ubuntu.qcow2" -> null
+      - format         = "qcow2" -> null
+      - id             = "/home/libvirt-images/vm-disk-4.qcow2" -> null
+      - name           = "vm-disk-4.qcow2" -> null
+      - pool           = "home-pool" -> null
+      - size           = 7730102272 -> null
+    }
+
+  # libvirt_volume.vm_disk[5] will be destroyed
+  - resource "libvirt_volume" "vm_disk" {
+      - base_volume_id = "/home/libvirt-images/ubuntu.qcow2" -> null
+      - format         = "qcow2" -> null
+      - id             = "/home/libvirt-images/vm-disk-5.qcow2" -> null
+      - name           = "vm-disk-5.qcow2" -> null
+      - pool           = "home-pool" -> null
+      - size           = 7730102272 -> null
+    }
+
+Plan: 0 to add, 0 to change, 19 to destroy.
+
+Changes to Outputs:
+  - hello      = "im tired" -> null
+  - vm_details = [
+      - {
+          - hostname = "master"
+          - ip       = "192.168.122.100"
+        },
+      - {
+          - hostname = "slave1"
+          - ip       = "192.168.122.101"
+        },
+      - {
+          - hostname = "slave2"
+          - ip       = "192.168.122.102"
+        },
+      - {
+          - hostname = "slave3"
+          - ip       = "192.168.122.103"
+        },
+      - {
+          - hostname = "slave4"
+          - ip       = "192.168.122.104"
+        },
+      - {
+          - hostname = "slave5"
+          - ip       = "192.168.122.105"
+        },
+    ] -> null
+libvirt_domain.vm[3]: Destroying... [id=7bcfeca7-c1bf-404a-bf51-2b5ad094788e]
+libvirt_domain.vm[1]: Destroying... [id=b194553f-1d3f-4f48-9b81-3d553a86b3b0]
+libvirt_domain.vm[5]: Destroying... [id=55a6bc1b-0490-45a5-b625-1eddcf1b0783]
+libvirt_domain.vm[0]: Destroying... [id=b1025f99-1968-4cf7-9c8b-ea61ced66334]
+libvirt_domain.vm[2]: Destroying... [id=4412e70f-c819-439b-ad6e-98c41793de47]
+libvirt_domain.vm[4]: Destroying... [id=84b01c57-c48f-41cc-9b57-d486e8a35850]
+libvirt_domain.vm[1]: Destruction complete after 0s
+libvirt_domain.vm[0]: Destruction complete after 0s
+libvirt_domain.vm[3]: Destruction complete after 0s
+libvirt_domain.vm[5]: Destruction complete after 0s
+libvirt_domain.vm[4]: Destruction complete after 0s
+libvirt_domain.vm[2]: Destruction complete after 0s
+libvirt_cloudinit_disk.commoninit[3]: Destroying... [id=/var/lib/libvirt/images/cloudinit-3.iso;f8982b34-7cdd-4de2-94fe-ee26132d88e2]
+libvirt_volume.vm_disk[2]: Destroying... [id=/home/libvirt-images/vm-disk-2.qcow2]
+libvirt_cloudinit_disk.commoninit[4]: Destroying... [id=/var/lib/libvirt/images/cloudinit-4.iso;146fd8c3-9982-4b89-bca6-ba56e1a795a8]
+libvirt_cloudinit_disk.commoninit[1]: Destroying... [id=/var/lib/libvirt/images/cloudinit-1.iso;2b3d13fc-1cad-40a0-a096-d5532b26aa4f]
+libvirt_volume.vm_disk[3]: Destroying... [id=/home/libvirt-images/vm-disk-3.qcow2]
+libvirt_volume.vm_disk[4]: Destroying... [id=/home/libvirt-images/vm-disk-4.qcow2]
+libvirt_volume.vm_disk[0]: Destroying... [id=/home/libvirt-images/vm-disk-0.qcow2]
+libvirt_cloudinit_disk.commoninit[5]: Destroying... [id=/var/lib/libvirt/images/cloudinit-5.iso;8b0d7d22-4744-4986-90e1-294c67692d0a]
+libvirt_volume.vm_disk[1]: Destroying... [id=/home/libvirt-images/vm-disk-1.qcow2]
+libvirt_cloudinit_disk.commoninit[2]: Destroying... [id=/var/lib/libvirt/images/cloudinit-2.iso;503620fe-e28a-45df-9b04-9c66451dadcd]
+libvirt_volume.vm_disk[3]: Destruction complete after 1s
+libvirt_cloudinit_disk.commoninit[4]: Destruction complete after 1s
+libvirt_volume.vm_disk[5]: Destroying... [id=/home/libvirt-images/vm-disk-5.qcow2]
+libvirt_cloudinit_disk.commoninit[0]: Destroying... [id=/var/lib/libvirt/images/cloudinit-0.iso;2b200ade-029e-4157-bb49-5c9fc4b966f5]
+libvirt_cloudinit_disk.commoninit[3]: Destruction complete after 1s
+libvirt_volume.vm_disk[0]: Destruction complete after 1s
+libvirt_cloudinit_disk.commoninit[2]: Destruction complete after 1s
+libvirt_volume.vm_disk[2]: Destruction complete after 1s
+libvirt_cloudinit_disk.commoninit[5]: Destruction complete after 1s
+libvirt_volume.vm_disk[1]: Destruction complete after 1s
+libvirt_cloudinit_disk.commoninit[1]: Destruction complete after 1s
+libvirt_volume.vm_disk[4]: Destruction complete after 1s
+libvirt_volume.vm_disk[5]: Destruction complete after 0s
+libvirt_cloudinit_disk.commoninit[0]: Destruction complete after 0s
+libvirt_volume.ubuntu_base_image: Destroying... [id=/home/libvirt-images/ubuntu.qcow2]
+libvirt_volume.ubuntu_base_image: Destruction complete after 0s
+
+Destroy complete! Resources: 19 destroyed.
+Result is at /output/

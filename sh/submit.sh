@@ -1,5 +1,4 @@
 
-printenv
 
 java_file=$1
 

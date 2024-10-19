@@ -88,19 +88,23 @@
         mode: '0600'
 
 
-    - name: Define host mappings
+    - name: Gather VM IPs and hostnames from inventory
       set_fact:
-        master_ip: "192.168.122.101"  # Replace with the actual IP of vm1
-        slave1_ip: "192.168.122.102"  # Replace with the actual IP of vm2
-        slave2_ip: "192.168.122.103"  # Replace with the actual IP of vm3
+        vm_ips: "{{ ansible_play_hosts | map('extract', hostvars, 'ansible_host') | list }}"
+        vm_hostnames: "{{ ansible_play_hosts | map('extract', hostvars, 'inventory_hostname') | list }}"
+
+    - name: Generate host mapping entries
+      set_fact:
+        host_mapping_lines: "{{ host_mapping_lines | default([]) + [vm_ips[item] + ' ' + vm_hostnames[item]] }}"
+      loop: "{{ range(0, vm_ips | length) | list }}"
 
     - name: Update /etc/hosts with VM mappings
       blockinfile:
         path: /etc/hosts
         block: |
-          {{ master_ip }}  vm1 master
-          {{ slave1_ip }}  vm2 slave1
-          {{ slave2_ip }}  vm3 slave2
+          {% for line in host_mapping_lines %}
+          {{ line }}
+          {% endfor %}
         marker: "# {mark} ANSIBLE MANAGED BLOCK"
       become: true
       

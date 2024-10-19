@@ -11,3 +11,10 @@ data.txt
 text.txt
 sta.sh
 test.sh
+output.txt
+terminal_output.txt
+*.qcow2
+
+
+CountingWord.java
+real_data.txt

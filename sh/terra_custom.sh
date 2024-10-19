@@ -9,7 +9,7 @@ if [ -f variables.tf ]; then
   rm variables.tf
 fi
 
-# Base IPs for the VMs (assuming master IP is fixed and starting IP for slaves is defined)
+# Base IPs for the VMs (Starting from .100)
 master_ip="192.168.122.100"
 slave_base_ip="192.168.122.101"
 
@@ -58,3 +58,42 @@ variable "vm_num" {
 EOL
 
 echo "Generated variables.tf with 1 master and $numofslaves slaves."
+
+# Define the inventory file path
+inventory_file="./ansible/inventory.ini"
+
+# Check if inventory.ini exists and remove it
+if [ -f "$inventory_file" ]; then
+  echo "Removing existing $inventory_file"
+  rm "$inventory_file"
+fi
+
+# Generate the new inventory.ini
+echo "[bigdata]" > "$inventory_file"
+
+# Add the master VM
+echo "master ansible_host=$master_ip ansible_user=ubuntu" >> "$inventory_file"
+
+# Loop to add slave VMs to the inventory
+for ((i=0; i<$numofslaves; i++))
+do
+  slave_ip=$(printf "192.168.122.%d" $((101 + i)))
+  echo "slave$((i + 1)) ansible_host=$slave_ip ansible_user=ubuntu" >> "$inventory_file"
+done
+
+echo "Generated $inventory_file with 1 master and $numofslaves slaves."
+
+
+maid_file="./ansible/files/slaves"
+
+if [ -f "$maid_file" ]; then
+  echo "Removing existing $maid_file"
+  rm "$maid_file"
+fi
+
+for ((i=0; i<$numofslaves; i++))
+do
+  echo "slave$((i + 1)) " >> "$maid_file"
+done
+
+echo "Generated $maid_file with $numofslaves slaves."

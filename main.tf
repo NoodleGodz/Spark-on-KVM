@@ -4,15 +4,15 @@ provider "libvirt" {
 }
 
 
-# Define the base Ubuntu image volume
+
 resource "libvirt_volume" "ubuntu_base_image" {
   name   = "ubuntu.qcow2"
   pool   = "home-pool"
-  source = "/home/baybobi/Desktop/bigdata/ubuntu.qcow2"  # Path to your existing Ubuntu image
+  source = "./image/ubuntu.qcow2"  
   format = "qcow2"
 }
 
-# Create separate disks for each VM, using the base image
+
 resource "libvirt_volume" "vm_disk" {
   count  = var.vm_num
   name   = "vm-disk-${count.index}.qcow2"
