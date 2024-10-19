@@ -1,0 +1,13 @@
+/id_rsa.pub
+# Ignore compressed files
+*.gz
+*.tgz
+
+# Ignore Terraform files
+.terraform/
+.terraform.lock.hcl
+terraform.*
+data.txt
+text.txt
+sta.sh
+test.sh

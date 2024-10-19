@@ -1,0 +1,39 @@
+---
+- name: Hadoop and Spark initialization on master
+  hosts: vm1
+  become: yes
+  tasks:
+
+    - name: Copy ENV
+      template: src=loaded_env.sh dest=/etc/profile.d/ mode=755
+
+    - name: Set ENV
+      shell: . /etc/profile.d/loaded_env.sh
+
+    - name: Check which files are sourced
+      shell: |
+        . /etc/profile.d/loaded_env.sh
+        printenv
+      register: shell_output
+
+    - name: Display sourced files output
+      debug:
+        var: shell_output.stdout_lines
+
+    - name: Display environment variables
+      debug:
+        var: env_output.stdout_lines
+
+
+      
+    - name: Format HDFS namenode
+      shell: |
+        . /etc/profile.d/loaded_env.sh
+        hdfs namenode -format
+
+    - name: Format HDFS namenode
+      shell: |
+        . /etc/profile.d/loaded_env.sh
+        start-dfs.sh
+        start-master.sh
+        start-slaves.sh
