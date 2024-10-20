@@ -2,9 +2,14 @@
 
 java_file=$1
 
-echo $(basename $java_file .java) 
 
-spark-submit --class $(basename $java_file .java) --master spark://master:7077 wc.jar
+
+base_name=$(basename "$java_file" .java)
+base_name=$(basename "$base_name" .jar)
+
+echo $base_name
+
+spark-submit --class $base_name --master spark://master:7077 $base_name.jar
 
 
 hdfs dfs -getmerge /output/ /tmp/output/output.txt

@@ -1,6 +1,6 @@
 
 if [ "$#" -ne 3 ]; then
-    echo "Usage: $0 <java_file> <data_file> <number_of_slaves>"
+    echo "Usage: $0 <java_file or jar_file> <data_file> <number_of_slaves>"
     exit 1
 fi
 
@@ -57,9 +57,10 @@ else
 fi
 
 
-echo "Compiling and packaging the Java file on the Master..."
-
-ssh $vm_user@$vm_ip 'bash -s' < ./sh/comp.sh $java_file
+if [[ $java_file == *.java ]]; then
+    echo "Compiling and packaging the Java file on the Master..."
+    ssh $vm_user@$vm_ip 'bash -s' < ./sh/comp.sh "$java_file"
+fi
 
 
 echo "Created Hdfs..."
