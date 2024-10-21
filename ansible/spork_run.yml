@@ -13,25 +13,25 @@
 
     - name: Replace core-site.xml
       copy:
-        src: "files/core-site.xml"  # Relative path to the updated file
+        src: "files/core-site.xml" 
         dest: /home/ubuntu/install/hadoop-2.7.1/etc/hadoop/core-site.xml
         mode: '0644'
 
     - name: Replace hdfs-site.xml
       copy:
-        src: "files/hdfs-site.xml"  # Relative path to the updated file
+        src: "files/hdfs-site.xml" 
         dest: /home/ubuntu/install/hadoop-2.7.1/etc/hadoop/hdfs-site.xml
         mode: '0644'
 
     - name: Replace Hadoop slaves file
       copy:
-        src: "files/slaves"  # Relative path to the updated file
+        src: "files/slaves" 
         dest: /home/ubuntu/install/hadoop-2.7.1/etc/hadoop/slaves
         mode: '0644'
 
     - name: Replace Spark slaves file
       copy:
-        src: "files/slaves"  # Relative path to the updated file for Spark
+        src: "files/slaves"
         dest: /home/ubuntu/install/spark-2.4.3-bin-hadoop2.7/conf/slaves
         mode: '0644'
 

@@ -36,7 +36,7 @@ resource "libvirt_cloudinit_disk" "commoninit" {
         sudo: ALL=(ALL) NOPASSWD:ALL
         shell: /bin/bash
         ssh-authorized-keys:
-          - ${file("${pathexpand("~/.ssh/id_rsa.pub")}")}  # Embed SSH public key
+          - ${file("${pathexpand("~/.ssh/id_rsa.pub")}")} 
 
     network:
       version: 2
@@ -52,7 +52,7 @@ resource "libvirt_cloudinit_disk" "commoninit" {
               - 8.8.8.8  # Google DNS
               - 8.8.4.4
           match:
-            macaddress: "52:54:00:${count.index}:${count.index}:01"  # Match based on MAC
+            macaddress: "52:54:00:${count.index}:${count.index}:01" 
           set-name: ens3
     growpart:
       devices: [/]
